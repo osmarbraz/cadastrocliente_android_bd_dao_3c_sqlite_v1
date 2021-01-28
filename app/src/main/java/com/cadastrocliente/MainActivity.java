@@ -25,6 +25,7 @@ import java.util.List;
  */
 
 public class MainActivity extends AppCompatActivity {
+    //Componentes a serem manipulados
     private EditText EditTextClienteId;
     private EditText EditTextNome;
     private EditText EditTextCpf;

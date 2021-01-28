@@ -24,14 +24,14 @@ public class SQLiteClienteDAO extends SQLiteDAOFactory implements ClienteDAO, SQ
     private List select(List<String> filtros, String ordem) {
         List lista = new LinkedList();
         String[] colunas = METADADOSSELECT.split(",");
-        SQLiteDatabase con = null;
+        SQLiteDatabase db = null;
         Cursor cursor = null;
         try {
-            con = getConnection();
-            cursor = con.query(TABLE, colunas, montaFiltro(filtros, " and "), null, null, null, ordem , null);
+            db = getConnection();
+            cursor = db.query(TABLE, colunas, montaFiltro(filtros, " and "), null, null, null, ordem , null);
             while (cursor.moveToNext()) {
                 Cliente cliente = new Cliente();
-                //Recupera o valor do campo pelo indice do nome da coluna
+                //Recupera o valor do campo pelo índice do nome da coluna
                 cliente.setClienteId(cursor.getString(cursor.getColumnIndex(PK[0])));
                 cliente.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
                 cliente.setCpf(cursor.getString(cursor.getColumnIndex("CPF")));
@@ -39,8 +39,8 @@ public class SQLiteClienteDAO extends SQLiteDAOFactory implements ClienteDAO, SQ
             }
             cursor.close();
             cursor = null;
-            con.close();
-            con = null;
+            db.close();
+            db = null;
         } catch (Exception e) {
             System.out.println(e);
         } finally {
@@ -51,12 +51,12 @@ public class SQLiteClienteDAO extends SQLiteDAOFactory implements ClienteDAO, SQ
                 }
                 cursor = null;
             }
-            if (con != null) {
+            if (db != null) {
                 try {
-                    con.close();
+                    db.close();
                 } catch (Exception e) {;
                 }
-                con = null;
+                db = null;
             }
         }
         return lista;
@@ -65,7 +65,7 @@ public class SQLiteClienteDAO extends SQLiteDAOFactory implements ClienteDAO, SQ
     public boolean inserir(Object obj) {
         if (obj != null) {
             Cliente cliente = (Cliente) obj;
-            SQLiteDatabase con = null;
+            SQLiteDatabase db = null;
             boolean res = false;
             StringBuilder sql = new StringBuilder();
             try {
@@ -76,22 +76,22 @@ public class SQLiteClienteDAO extends SQLiteDAOFactory implements ClienteDAO, SQ
                 sql.append("','" + preparaSQL(cliente.getNome()));
                 sql.append("','" + preparaSQL(cliente.getCpf()) + "')");
 
-                con = getConnection();
-                con.execSQL(sql.toString());
+                db = getConnection();
+                db.execSQL(sql.toString());
 
-                con.close();
-                con = null;
+                db.close();
+                db = null;
                 res = true;
             } catch (Exception e) {
                 System.out.println(e);
                 res = false;
             } finally {
-                if (con != null) {
+                if (db != null) {
                     try {
-                        con.close();
+                        db.close();
                     } catch (Exception e) {;
                     }
-                    con = null;
+                    db = null;
                 }
             }
             return res;
@@ -102,7 +102,7 @@ public class SQLiteClienteDAO extends SQLiteDAOFactory implements ClienteDAO, SQ
     public int alterar(Object obj) {
         if (obj != null) {
             Cliente cliente = (Cliente) obj;
-            SQLiteDatabase con = null;
+            SQLiteDatabase db = null;
             int res = 0;
             StringBuilder sql = new StringBuilder();
             try {
@@ -111,22 +111,22 @@ public class SQLiteClienteDAO extends SQLiteDAOFactory implements ClienteDAO, SQ
                 sql.append(" CPF='" + cliente.getCpf() + "'");
                 sql.append(" where " + TABLE + "." + PK[0] + "='" + preparaSQL(cliente.getClienteId()) + "'");
 
-                con = getConnection();
-                con.execSQL(sql.toString());
-                con.close();
-                con = null;
+                db = getConnection();
+                db.execSQL(sql.toString());
+                db.close();
+                db = null;
                 res = 1;
 
             } catch (Exception e) {
                 System.out.println(e);
                 res = 0;
             } finally {
-                if (con != null) {
+                if (db != null) {
                     try {
-                        con.close();
+                        db.close();
                     } catch (Exception e) {;
                     }
-                    con = null;
+                    db = null;
                 }
             }
             return res;
@@ -137,27 +137,27 @@ public class SQLiteClienteDAO extends SQLiteDAOFactory implements ClienteDAO, SQ
     public int excluir(Object obj) {
         if (obj != null) {
             Cliente cliente = (Cliente) obj;
-            SQLiteDatabase con = null;
+            SQLiteDatabase db = null;
             StringBuilder sql = new StringBuilder();
             int res = 0;
             try {
                 sql.append("delete from " + TABLE + " where " + TABLE + "." + PK[0] + " = '" + preparaSQL(cliente.getClienteId()) + "'");
-                con = getConnection();
+                db = getConnection();
 
-                con.execSQL(sql.toString());
-                con.close();
-                con = null;
+                db.execSQL(sql.toString());
+                db.close();
+                db = null;
                 res = 1;
             } catch (Exception e) {
                 System.out.println(e);
                 res = 0;
             } finally {
-                if (con != null) {
+                if (db != null) {
                     try {
-                        con.close();
+                        db.close();
                     } catch (Exception e) {;
                     }
-                    con = null;
+                    db = null;
                 }
             }
             return res;
@@ -165,6 +165,11 @@ public class SQLiteClienteDAO extends SQLiteDAOFactory implements ClienteDAO, SQ
         return 0;
     }
 
+    /**
+     * Monta uma lista com os filtros para consulta de acordo como preenchimento dos atributos do objeto
+     * @param obj Objeto que possui os dados do filtro.
+     * @return Uma lista com os dados do filtro.
+     */
     public List aplicarFiltro(Object obj) {
         if (obj != null) {
             Cliente cliente = (Cliente) obj;
@@ -190,42 +195,42 @@ public class SQLiteClienteDAO extends SQLiteDAOFactory implements ClienteDAO, SQ
     }
 
     public void criar() {
-        SQLiteDatabase con = null;
+        SQLiteDatabase db = null;
         try {
-            con = getConnection();
+            db = getConnection();
             //Cria a tabela senão existir
-            con.execSQL("create table IF NOT EXISTS CLIENTE (CLIENTEID integer, NOME varchar(100), CPF varchar(11), CONSTRAINT PK_CLIENTE PRIMARY KEY (CLIENTEID));");
-            con.close();
-            con = null;
+            db.execSQL("create table IF NOT EXISTS CLIENTE (CLIENTEID integer, NOME varchar(100), CPF varchar(11), CONSTRAINT PK_CLIENTE PRIMARY KEY (CLIENTEID));");
+            db.close();
+            db = null;
         } catch (Exception e) {
             System.out.println(e);
         } finally {
-            if (con != null) {
+            if (db != null) {
                 try {
-                    con.close();
+                    db.close();
                 } catch (Exception e) {;
                 }
-                con = null;
+                db = null;
             }
         }
     }
 
-    public void esvaziarTabela() {
-        SQLiteDatabase con = null;
+    public void apagarTabela() {
+        SQLiteDatabase db = null;
         try {
-            con = getConnection();
-            con.delete(TABLE, null, null);
-            con.close();
-            con = null;
+            db = getConnection();
+            db.delete(TABLE, null, null);
+            db.close();
+            db = null;
         } catch (Exception e) {
             System.out.println(e);
         } finally {
-            if (con != null) {
+            if (db != null) {
                 try {
-                    con.close();
+                    db.close();
                 } catch (Exception e) {;
                 }
-                con = null;
+                db = null;
             }
         }
     }

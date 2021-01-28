@@ -21,7 +21,7 @@ public interface ClienteDAO {
 
     public void criar();
 
-    public void esvaziarTabela();
+    public void apagarTabela();
 
     public long getNumeroRegistros();
 }

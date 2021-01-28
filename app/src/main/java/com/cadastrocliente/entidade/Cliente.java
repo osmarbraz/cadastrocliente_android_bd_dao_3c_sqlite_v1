@@ -174,7 +174,7 @@ public class Cliente {
     public void esvaziarTabela(){
         DAOFactory factory = DAOFactory.getDAOFactory();
         ClienteDAO clientedao = factory.getClienteDAO();
-        clientedao.esvaziarTabela();
+        clientedao.apagarTabela();
     }
 
     /**
