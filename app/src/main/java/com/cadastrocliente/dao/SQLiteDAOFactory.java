@@ -2,15 +2,12 @@ package com.cadastrocliente.dao;
 
 import android.database.sqlite.SQLiteDatabase;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import com.cadastrocliente.dao.cliente.ClienteDAO;
+import com.cadastrocliente.dao.cliente.SQLiteClienteDAO;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-
-import com.cadastrocliente.dao.cliente.ClienteDAO;
-import com.cadastrocliente.dao.cliente.SQLiteClienteDAO;
 
 /**
  * Implementa a fonte de dado para persistência em arquivo utilizando SGBD
@@ -27,7 +24,7 @@ public class SQLiteDAOFactory extends DAOFactory implements SQLiteDadosBanco {
      *
      * @return Connection Um objeto com a conexão aberta
      */
-    protected SQLiteDatabase getConnection()  {
+    protected SQLiteDatabase getConnection() {
         SQLiteDatabase con = getContext().openOrCreateDatabase(DATABASE, 0, null);
 
         return con;
@@ -46,8 +43,8 @@ public class SQLiteDAOFactory extends DAOFactory implements SQLiteDadosBanco {
      * Operação para prepara a string que será enviada ao banco de dados Se ela.
      * possui uma ' será duplicada para anular o efeito de sql injetado.
      *
-     * @return String texto com ' duplicado.
      * @param valor string a ser preparada para envio ao banco de dados.
+     * @return String texto com ' duplicado.
      */
     protected String preparaSQL(String valor) {
         if (valor != null) {
@@ -60,10 +57,9 @@ public class SQLiteDAOFactory extends DAOFactory implements SQLiteDadosBanco {
     /**
      * Concatena String baseado nos valores Strings de uma Collection
      *
-     * @return String Com os literais conctatenados.
-     *
-     * @param separator Separador dos campos.
+     * @param separator  Separador dos campos.
      * @param collection Coleção com os campos.
+     * @return String Com os literais conctatenados.
      */
     public String implode(String separator, Collection collection) {
         StringBuffer textBufferReturn = new StringBuffer();
@@ -81,17 +77,18 @@ public class SQLiteDAOFactory extends DAOFactory implements SQLiteDadosBanco {
 
     /**
      * Monta a string do filtro.
-     * @param lista Lista dos campos do filtro.
+     *
+     * @param lista     Lista dos campos do filtro.
      * @param separador Separador os dados do filtro.
      * @return Retorna uma string com os dados do filtro.
      */
     public String montaFiltro(List<String> lista, String separador) {
         StringBuffer filtro = new StringBuffer();
         Iterator<String> filtroIt = lista.iterator();
-        while(filtroIt.hasNext()) {
+        while (filtroIt.hasNext()) {
             String texto = filtroIt.next();
             filtro.append(texto);
-            if(filtroIt.hasNext()) {
+            if (filtroIt.hasNext()) {
                 filtro.append(" " + separador + " ");
             }
         }

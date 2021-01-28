@@ -1,14 +1,14 @@
 package com.cadastrocliente;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.cadastrocliente.dao.DAOFactory;
 import com.cadastrocliente.entidade.Cliente;
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         DAOFactory.setContext(getApplicationContext());
 
         //Cria a tabela
-        Cliente cliente =  new Cliente();
+        Cliente cliente = new Cliente();
         cliente.criar();
 
         //Atualiza a quantidade de registros
@@ -148,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
             EditTextClienteId.requestFocus();
         }
     }
+
     public void onClickExcluir(View v) {
         //Verifica se o clienteId foi preenchido
         if (!EditTextClienteId.getText().toString().equals("")) {
@@ -235,10 +236,10 @@ public class MainActivity extends AppCompatActivity {
         //Cabeçalho da listagem
         String saida = "clienteId - nome - cpf\n";
         //Percorre a lista recuperando os dados do objeto
-        for (int i=0;i<lista.size();i++){
+        for (int i = 0; i < lista.size(); i++) {
             //Recupera o cliente i da lista
-            Cliente cli = (Cliente)lista.get(i);
-            saida = saida +  cli.getClienteId() + "-" + cli.getNome() + "-" + cli.getCpf() + "\n";
+            Cliente cli = (Cliente) lista.get(i);
+            saida = saida + cli.getClienteId() + "-" + cli.getNome() + "-" + cli.getCpf() + "\n";
         }
         EditTextListaDados.setText(saida);
     }

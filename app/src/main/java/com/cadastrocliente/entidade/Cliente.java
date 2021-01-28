@@ -1,9 +1,9 @@
 package com.cadastrocliente.entidade;
 
-import java.util.List;
-
-import com.cadastrocliente.dao.cliente.ClienteDAO;
 import com.cadastrocliente.dao.DAOFactory;
+import com.cadastrocliente.dao.cliente.ClienteDAO;
+
+import java.util.List;
 
 /**
  * Classe que representa a abstração principal do sistema.
@@ -162,7 +162,7 @@ public class Cliente {
     /**
      * Cria a tabela para os dados do objeto.
      */
-    public void criar(){
+    public void criar() {
         DAOFactory factory = DAOFactory.getDAOFactory();
         ClienteDAO clientedao = factory.getClienteDAO();
         clientedao.criar();
@@ -171,7 +171,7 @@ public class Cliente {
     /**
      * Apaga a tabela do objeto.
      */
-    public void esvaziarTabela(){
+    public void esvaziarTabela() {
         DAOFactory factory = DAOFactory.getDAOFactory();
         ClienteDAO clientedao = factory.getClienteDAO();
         clientedao.apagarTabela();
