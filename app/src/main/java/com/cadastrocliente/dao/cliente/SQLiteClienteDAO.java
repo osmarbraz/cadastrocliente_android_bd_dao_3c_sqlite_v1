@@ -21,6 +21,12 @@ import com.cadastrocliente.entidade.Cliente;
  */
 public class SQLiteClienteDAO extends SQLiteDAOFactory implements ClienteDAO, SQLiteClienteMetaDados {
 
+    /**
+     * Retorna uma lista com os objetos segundo os critérios do filtro e ordem.
+     * @param filtros Lista dos campos a serem utilizados no filtro.
+     * @param ordem Ordem dos dados na consulta.
+     * @return Lista com os objetos.
+     */
     private List select(List<String> filtros, String ordem) {
         List lista = new LinkedList();
         String[] colunas = METADADOSSELECT.split(",");
