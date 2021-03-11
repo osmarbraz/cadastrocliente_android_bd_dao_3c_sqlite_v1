@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
         if (!EditTextClienteId.getText().toString().equals("")) {
             //Instancia o objeto Cliente
             Cliente cliente = new Cliente();
-            //Preenche os dtributos do objeto com os dados da interface
+            //Preenche os atributos do objeto com os dados da interface
             cliente.setClienteId(EditTextClienteId.getText().toString());
             boolean resultadoConsulta = cliente.abrir();
             if (resultadoConsulta == true) {
@@ -165,7 +165,6 @@ public class MainActivity extends AppCompatActivity {
                 dialogo.setPositiveButton("Sim", new DialogInterface.OnClickListener() { //Evento para o botão sim
                     public void onClick(DialogInterface dialog, int which) {
                         //Ação para a resposta sim
-
                         int resultadoExclusao = cliente.excluir();
                         if (resultadoExclusao != 0) {
                             Toast.makeText(MainActivity.this, "Exclusão realizada com sucesso!", Toast.LENGTH_SHORT).show();
