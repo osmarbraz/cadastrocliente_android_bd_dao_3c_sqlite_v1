@@ -207,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
                 //Instancia o objeto Cliente
                 Cliente cliente = new Cliente();
                 //Apaga a tabela
-                cliente.esvaziarTabela();
+                cliente.apagarTabela();
                 Toast.makeText(MainActivity.this, "Tabela Apagada!", Toast.LENGTH_SHORT).show();
                 //Cria a tabela novamente
                 cliente.criar();

@@ -1,7 +1,7 @@
 package com.cadastrocliente.dao;
 
 /**
- * Interface que armazena os dados de configuracao do banco de dados SQLite.
+ * Interface que armazena os dados de configuração do banco de dados SQLite.
  *
  * @author osmarbraz
  * @version 1.0
