@@ -70,7 +70,7 @@ public class SQLiteClienteDAO extends SQLiteDAOFactory implements ClienteDAO, SQ
         return lista;
     }
 
-    public boolean inserir(Object obj) {
+    public boolean incluir(Object obj) {
         if (obj != null) {
             Cliente cliente = (Cliente) obj;
             SQLiteDatabase db = null;

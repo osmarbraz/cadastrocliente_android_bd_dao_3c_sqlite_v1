@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface ClienteDAO {
 
-    public boolean inserir(Object obj);
+    public boolean incluir(Object obj);
 
     public int alterar(Object obj);
 

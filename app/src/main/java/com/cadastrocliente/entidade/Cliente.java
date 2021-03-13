@@ -111,7 +111,7 @@ public class Cliente {
     public boolean inserir() {
         DAOFactory factory = DAOFactory.getDAOFactory();
         ClienteDAO clientedao = factory.getClienteDAO();
-        return clientedao.inserir(this);
+        return clientedao.incluir(this);
     }
 
     /**
