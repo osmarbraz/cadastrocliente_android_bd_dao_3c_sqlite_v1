@@ -106,7 +106,7 @@ public class Cliente {
     }
 
     /**
-     * Persiste um objeto.
+     * Persiste o estado de um objeto.
      */
     public boolean incluir() {
         DAOFactory factory = DAOFactory.getDAOFactory();
@@ -124,7 +124,7 @@ public class Cliente {
     }
 
     /**
-     * Exclui um objeto da persistência através do identificado.
+     * Exclui um objeto do mecanimos de persistência através do identificador.
      */
     public int excluir() {
         DAOFactory factory = DAOFactory.getDAOFactory();
