@@ -108,7 +108,7 @@ public class Cliente {
     /**
      * Persiste um objeto.
      */
-    public boolean inserir() {
+    public boolean incluir() {
         DAOFactory factory = DAOFactory.getDAOFactory();
         ClienteDAO clientedao = factory.getClienteDAO();
         return clientedao.incluir(this);
