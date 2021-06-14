@@ -21,20 +21,20 @@ import java.util.List;
 public class SQLiteClienteDAO extends SQLiteDAOFactory implements ClienteDAO, SQLiteClienteMetaDados {
 
     /**
-     * Retorna uma lista com os objetos segundo os critérios do filtro e ordem.
+     * Retorna uma lista com os objetos segundo o SQL especificado.
      *
-     * @param filtros Lista dos campos a serem utilizados no filtro.
-     * @param ordem   Ordem dos dados na consulta.
+     * @param sql String com o SQL a ser executado.
      * @return Lista com os objetos.
      */
-    private List select(List<String> filtros, String ordem) {
+    private List select(String sql) {
         List lista = new LinkedList();
-        String[] colunas = METADADOSSELECT.split(",");
         SQLiteDatabase db = null;
         Cursor cursor = null;
         try {
             db = getConnection();
-            cursor = db.query(TABLE, colunas, montaFiltro(filtros, " and "), null, null, null, ordem, null);
+            // Executa a consulta no banco de dados
+            cursor = db.rawQuery(sql, null);
+            // Percorre os dados recuperados
             while (cursor.moveToNext()) {
                 Cliente cliente = new Cliente();
                 //Recupera o valor do campo pelo índice do nome da coluna
@@ -186,21 +186,30 @@ public class SQLiteClienteDAO extends SQLiteDAOFactory implements ClienteDAO, SQ
         if (obj != null) {
             Cliente cliente = (Cliente) obj;
 
-            List<String> filtros = new ArrayList<String>();
+            StringBuilder sqlBuilder = new StringBuilder();
+            sqlBuilder.append("select " + METADADOSSELECT + " from " + TABLE);
 
-            if (cliente.getClienteId() != "") {
-                filtros.add(TABLE + "." + PK[0] + "= '" + cliente.getClienteId() + "'");
+            List filtros = new ArrayList();
+
+            if (cliente.getClienteId() != null && !"".equals(cliente.getClienteId())) {
+                filtros.add(TABLE + "." + PK[0] + "='" + preparaSQL(cliente.getClienteId()) + "'");
             }
 
-            if (!cliente.getNome().equals("")) {
-                filtros.add(TABLE + ".NOME like '" + cliente.getNome() + "'");
+            if (cliente.getNome() != null && !"".equals(cliente.getNome())) {
+                filtros.add(TABLE + ".NOME like upper('%" + preparaSQL(cliente.getNome()) + "%')");
             }
 
-            if (!cliente.getCpf().equals("")) {
-                filtros.add(TABLE + ".NOME like '" + cliente.getCpf() + "'");
+            if (cliente.getCpf() != null && !"".equals(cliente.getCpf())) {
+                filtros.add(TABLE + ".CPF = '" + preparaSQL(cliente.getCpf()) + "'");
             }
 
-            return select(filtros, PK[0]);
+            if (!filtros.isEmpty()) {
+                sqlBuilder.append(" where " + implode(" and ", filtros));
+            }
+
+            sqlBuilder.append(" order by " + TABLE + "." + PK[0]);
+
+            return select(sqlBuilder.toString());
         } else {
             return null;
         }
