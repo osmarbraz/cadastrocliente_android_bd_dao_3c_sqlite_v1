@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             Valida valida = new Valida();
             boolean cpfValido = valida.validaCPF(cliente.getCpf());
             if (cpfValido == true) {
-                boolean resultado = cliente.inserir();
+                boolean resultado = cliente.incluir();
                 if (resultado == true) {
                     Toast.makeText(MainActivity.this, "Inclusão realizada com sucesso!", Toast.LENGTH_SHORT).show();
                     atualizaRegistros();
